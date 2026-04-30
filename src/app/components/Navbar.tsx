@@ -3,6 +3,7 @@ import { Menu, X, LayoutDashboard } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router";
 import { useAuth, getRedirectPath } from "../context/AuthContext";
+import logoSrc from "../../assets/logo.png";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,15 +48,8 @@ export function Navbar() {
             onClick={() => scrollTo("#home")}
             className="flex items-center gap-3 group"
           >
-            <div className="relative w-10 h-10 flex-shrink-0">
-              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                <circle cx="20" cy="20" r="19" fill="#9B1B2E" />
-                <circle cx="20" cy="20" r="19" stroke="#C8962C" strokeWidth="1.5" />
-                <path d="M14 26L20 10L26 26" stroke="#FDFDF0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M16.5 20.5H23.5" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M20 26V30" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-                <circle cx="20" cy="31" r="1" fill="#C8962C" />
-              </svg>
+            <div className="relative w-11 h-11 flex-shrink-0 flex items-center justify-center bg-white rounded-full shadow-sm border border-[#E8DDD5]">
+              <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
             </div>
             <div className="flex flex-col leading-tight">
               <span

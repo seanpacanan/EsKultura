@@ -45,8 +45,9 @@ async function request<T = unknown>(
   options: RequestInit = {},
   token?: string | null
 ): Promise<T> {
+  const hasBody = options.method === "POST" || options.method === "PUT";
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
+    ...(hasBody ? { "Content-Type": "application/json" } : {}),
     Authorization: `Bearer ${token || publicAnonKey}`,
     ...(options.headers as Record<string, string>),
   };

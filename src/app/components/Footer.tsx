@@ -1,4 +1,5 @@
 import { Facebook, Mail, MapPin, Heart } from "lucide-react";
+import logoSrc from "../../assets/logo.png";
 
 const units = ["Himig", "Teatro", "Katha", "Ritmo", "Likha"];
 
@@ -19,15 +20,8 @@ export function Footer() {
           <div className="lg:col-span-1 flex flex-col gap-5">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 flex-shrink-0">
-                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                  <circle cx="20" cy="20" r="19" fill="#9B1B2E" />
-                  <circle cx="20" cy="20" r="19" stroke="#C8962C" strokeWidth="1.5" />
-                  <path d="M14 26L20 10L26 26" stroke="#FDFDF0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M16.5 20.5H23.5" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-                  <path d="M20 26V30" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-                  <circle cx="20" cy="31" r="1" fill="#C8962C" />
-                </svg>
+              <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-white rounded-full shadow-md">
+                <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
               </div>
               <div>
                 <p className="text-white" style={{ fontFamily: "'Inter', serif", fontWeight: 700, fontSize: "1.1rem" }}>

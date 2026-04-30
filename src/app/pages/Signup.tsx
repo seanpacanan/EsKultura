@@ -4,6 +4,7 @@ import { Eye, EyeOff, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
 import { api } from "../lib/api";
 import { useAuth, getRedirectPath } from "../context/AuthContext";
 import { toast } from "sonner";
+import logoSrc from '../../assets/logo.png';
 
 function FilipinoBg() {
   return (
@@ -97,15 +98,8 @@ export function Signup() {
         <FilipinoBg />
 
         <div className="relative z-10 flex items-center gap-3">
-          <div className="w-10 h-10">
-            <svg viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="19" fill="#9B1B2E" />
-              <circle cx="20" cy="20" r="19" stroke="#C8962C" strokeWidth="1.5" />
-              <path d="M14 26L20 10L26 26" stroke="#FDFDF0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M16.5 20.5H23.5" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M20 26V30" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="20" cy="31" r="1" fill="#C8962C" />
-            </svg>
+          <div className="w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-lg">
+            <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
           </div>
           <div>
             <p className="text-white" style={{ fontFamily: "'Inter', serif", fontWeight: 700, fontSize: "1.1rem" }}>Eskultura</p>
@@ -148,12 +142,8 @@ export function Signup() {
       <div className="flex-1 flex items-center justify-center px-6 py-12" style={{ background: "#FDFAF4" }}>
         <div className="w-full max-w-md">
           <div className="lg:hidden flex items-center gap-2 mb-8">
-            <div className="w-8 h-8">
-              <svg viewBox="0 0 40 40" fill="none">
-                <circle cx="20" cy="20" r="19" fill="#9B1B2E" />
-                <path d="M14 26L20 10L26 26" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M16.5 20.5H23.5" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
+            <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-sm border border-[#E8DDD5]">
+              <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
             </div>
             <span style={{ fontFamily: "'Inter', serif", fontWeight: 700, color: "#A47251" }}>Eskultura</span>
           </div>

@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router";
 import { Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react";
 import { useAuth, getRedirectPath } from "../context/AuthContext";
 import { toast } from "sonner";
+import logoSrc from '../../assets/logo.png';
 
 function FilipinoBg() {
   return (
@@ -34,21 +35,6 @@ export function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // #region agent log
-    fetch("http://127.0.0.1:7554/ingest/21e329e2-6a1c-4379-8db0-2334e11298da", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "e8c9fa" },
-      body: JSON.stringify({
-        sessionId: "e8c9fa",
-        runId: "pre-fix",
-        hypothesisId: "H9",
-        location: "src/app/pages/Login.tsx:handleSubmit.start",
-        message: "Login submitted",
-        data: { hasEmail: !!email, hasPassword: !!password },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion
     if (!email || !password) { setError("Please fill in all fields."); return; }
     setLoading(true);
     setError("");
@@ -56,42 +42,12 @@ export function Login() {
     const result = await signIn(email, password);
 
     if (result.error) {
-      // #region agent log
-      fetch("http://127.0.0.1:7554/ingest/21e329e2-6a1c-4379-8db0-2334e11298da", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "e8c9fa" },
-        body: JSON.stringify({
-          sessionId: "e8c9fa",
-          runId: "pre-fix",
-          hypothesisId: "H9",
-          location: "src/app/pages/Login.tsx:handleSubmit.error",
-          message: "Login failed",
-          data: { error: result.error },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-      // #endregion
       setError(result.error);
       setLoading(false);
       return;
     }
 
     const profile = result.profile;
-    // #region agent log
-    fetch("http://127.0.0.1:7554/ingest/21e329e2-6a1c-4379-8db0-2334e11298da", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "e8c9fa" },
-      body: JSON.stringify({
-        sessionId: "e8c9fa",
-        runId: "pre-fix",
-        hypothesisId: "H9",
-        location: "src/app/pages/Login.tsx:handleSubmit.success",
-        message: "Login succeeded",
-        data: { redirectPath: getRedirectPath(profile ?? null) },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion
     toast.success("Welcome back!");
     navigate(getRedirectPath(profile ?? null), { replace: true });
     setLoading(false);
@@ -108,15 +64,8 @@ export function Login() {
 
         {/* Logo */}
         <div className="relative z-10 flex items-center gap-3">
-          <div className="w-10 h-10">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="19" fill="#9B1B2E" />
-              <circle cx="20" cy="20" r="19" stroke="#C8962C" strokeWidth="1.5" />
-              <path d="M14 26L20 10L26 26" stroke="#FDFDF0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M16.5 20.5H23.5" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M20 26V30" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="20" cy="31" r="1" fill="#C8962C" />
-            </svg>
+          <div className="w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-lg">
+            <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
           </div>
           <div>
             <p className="text-white" style={{ fontFamily: "'Inter', serif", fontWeight: 700, fontSize: "1.1rem" }}>EsKultura</p>
@@ -164,12 +113,8 @@ export function Login() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8">
-            <div className="w-8 h-8">
-              <svg viewBox="0 0 40 40" fill="none">
-                <circle cx="20" cy="20" r="19" fill="#9B1B2E" />
-                <path d="M14 26L20 10L26 26" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M16.5 20.5H23.5" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
+            <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-sm border border-[#E8DDD5]">
+              <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
             </div>
             <span style={{ fontFamily: "'Inter', serif", fontWeight: 700, color: "#A47251" }}>EsKultura</span>
           </div>
@@ -250,7 +195,7 @@ export function Login() {
 
           {/* Footer */}
           <p className="mt-8 text-center text-[#6B5E59]/60 text-xs">
-            By signing in, you agree to EsFultura's Terms of Service and Privacy Policy.
+            By signing in, you agree to Eskultura's Terms of Service and Privacy Policy.
           </p>
           <p className="mt-3 text-center">
             <Link to="/" className="text-[#A47251]/70 hover:text-[#A47251] text-xs transition-colors">

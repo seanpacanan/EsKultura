@@ -39,21 +39,6 @@ function DashboardContent() {
 
   const fetchData = async () => {
     if (!session?.access_token) return;
-    // #region agent log
-    fetch("http://127.0.0.1:7554/ingest/21e329e2-6a1c-4379-8db0-2334e11298da", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "e8c9fa" },
-      body: JSON.stringify({
-        sessionId: "e8c9fa",
-        runId: "pre-fix",
-        hypothesisId: "H10",
-        location: "src/app/pages/Dashboard.tsx:fetchData.start",
-        message: "Dashboard data fetch started",
-        data: {},
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion
     setLoadingData(true);
     try {
       const [ann, reqs] = await Promise.all([
@@ -62,38 +47,8 @@ function DashboardContent() {
       ]);
       setAnnouncements(ann);
       setRequests(reqs);
-      // #region agent log
-      fetch("http://127.0.0.1:7554/ingest/21e329e2-6a1c-4379-8db0-2334e11298da", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "e8c9fa" },
-        body: JSON.stringify({
-          sessionId: "e8c9fa",
-          runId: "pre-fix",
-          hypothesisId: "H10",
-          location: "src/app/pages/Dashboard.tsx:fetchData.success",
-          message: "Dashboard data fetch succeeded",
-          data: { announcements: ann.length, requests: reqs.length },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-      // #endregion
     } catch (err) {
       console.error("Dashboard fetch error:", err);
-      // #region agent log
-      fetch("http://127.0.0.1:7554/ingest/21e329e2-6a1c-4379-8db0-2334e11298da", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "e8c9fa" },
-        body: JSON.stringify({
-          sessionId: "e8c9fa",
-          runId: "pre-fix",
-          hypothesisId: "H10",
-          location: "src/app/pages/Dashboard.tsx:fetchData.error",
-          message: "Dashboard data fetch failed",
-          data: { error: err instanceof Error ? err.message : "unknown" },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-      // #endregion
     }
     setLoadingData(false);
   };
@@ -110,7 +65,7 @@ function DashboardContent() {
     try {
       await api.createMembershipRequest(profile.unit, session.access_token);
       toast.success("Membership request submitted!");
-      fetchData();
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to submit request");
     }

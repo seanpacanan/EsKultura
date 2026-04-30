@@ -35,6 +35,7 @@ function CoordContent() {
   const [annTitle, setAnnTitle] = useState("");
   const [annContent, setAnnContent] = useState("");
   const [annSaving, setAnnSaving] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   const unit = profile?.unit;
   const unitColor = unit ? unitColors[unit] : "#9B1B2E";
@@ -66,7 +67,7 @@ function CoordContent() {
     try {
       await api.updateMembershipRequest(id, status, session.access_token);
       toast.success(`Request ${status}`);
-      fetchData();
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Action failed");
     }
@@ -100,7 +101,7 @@ function CoordContent() {
         toast.success("Announcement published");
       }
       setShowForm(false);
-      fetchData();
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to save");
     }
@@ -108,11 +109,12 @@ function CoordContent() {
   };
 
   const deleteAnnouncement = async (id: string) => {
-    if (!session?.access_token || !confirm("Delete this announcement?")) return;
+    if (!session?.access_token) return;
     try {
       await api.deleteAnnouncement(id, session.access_token);
       toast.success("Announcement deleted");
-      fetchData();
+      setDeleteConfirmId(null);
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to delete");
     }
@@ -126,6 +128,18 @@ function CoordContent() {
     { id: "members", label: "Members", icon: <Users size={15} />, count: activeMembers.length },
     { id: "announcements", label: "Announcements", icon: <Bell size={15} />, count: announcements.length },
   ];
+
+  // Guard: coordinator must have a unit assigned (placed AFTER all hooks to follow Rules of Hooks)
+  if (!unit) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FDFAF4", fontFamily: "'Inter', sans-serif" }}>
+        <div className="text-center p-8 rounded-2xl bg-white border border-[#F0E8E0] shadow-sm max-w-sm">
+          <p className="text-[#1A1210] font-semibold text-lg">No unit assigned</p>
+          <p className="text-[#6B5E59] text-sm mt-2">Your coordinator account has no unit assigned yet. Please contact an administrator.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen" style={{ background: "#FDFAF4", fontFamily: "'Inter', sans-serif" }}>
@@ -300,9 +314,23 @@ function CoordContent() {
                           <button onClick={() => openEdit(ann)} className="p-1.5 rounded-lg hover:bg-[#F0E8E0] text-[#6B5E59] transition-colors">
                             <Pencil size={14} />
                           </button>
-                          <button onClick={() => deleteAnnouncement(ann.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-[#6B5E59] hover:text-red-600 transition-colors">
-                            <Trash2 size={14} />
-                          </button>
+                          {deleteConfirmId === ann.id ? (
+                            <div className="flex items-center gap-1">
+                              <button onClick={() => deleteAnnouncement(ann.id)}
+                                className="px-2 py-1 rounded-lg text-xs text-white font-medium"
+                                style={{ background: "#dc2626" }}>
+                                Confirm
+                              </button>
+                              <button onClick={() => setDeleteConfirmId(null)}
+                                className="px-2 py-1 rounded-lg text-xs border border-[#E8DDD5] text-[#6B5E59]">
+                                Cancel
+                              </button>
+                            </div>
+                          ) : (
+                            <button onClick={() => setDeleteConfirmId(ann.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-[#6B5E59] hover:text-red-600 transition-colors">
+                              <Trash2 size={14} />
+                            </button>
+                          )}
                         </div>
                       </div>
                       <p className="text-[#6B5E59] text-sm leading-relaxed mt-2">{ann.content}</p>

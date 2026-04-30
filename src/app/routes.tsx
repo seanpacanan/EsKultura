@@ -20,11 +20,11 @@ export const router = createBrowserRouter([
       { path: "signup", Component: Signup },
       {
         path: "onboarding",
-        element: <ProtectedRoute><Onboarding /></ProtectedRoute>,
+        element: <ProtectedRoute allowIncompleteProfile><Onboarding /></ProtectedRoute>,
       },
       {
         path: "dashboard",
-        element: <ProtectedRoute allowedRoles={["viewer", "coordinator", "admin"]}><Dashboard /></ProtectedRoute>,
+        element: <ProtectedRoute allowedRoles={["viewer"]}><Dashboard /></ProtectedRoute>,
       },
       {
         path: "coordinator",

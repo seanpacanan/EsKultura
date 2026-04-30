@@ -6,9 +6,11 @@ import type { Role } from "../lib/api";
 interface ProtectedRouteProps {
   children: React.ReactNode;
   allowedRoles?: Role[];
+  /** Set to true for routes that are meant to complete the profile (e.g. /onboarding) */
+  allowIncompleteProfile?: boolean;
 }
 
-export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
+export function ProtectedRoute({ children, allowedRoles, allowIncompleteProfile = false }: ProtectedRouteProps) {
   const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -21,22 +23,21 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
       return;
     }
 
-    // Profile incomplete → onboarding
-    if (profile && !isProfileComplete(profile)) {
+    // Profile missing or incomplete → onboarding (skip if this IS the onboarding route)
+    if (!allowIncompleteProfile && (!profile || !isProfileComplete(profile))) {
       navigate("/onboarding", { replace: true });
       return;
     }
 
-    // Role-based redirect
-    if (allowedRoles && profile) {
+    // Role-based redirect (only enforce when profile is complete)
+    if (allowedRoles && profile && isProfileComplete(profile)) {
       if (!allowedRoles.includes(profile.role)) {
-        // Redirect to appropriate dashboard
         if (profile.role === "admin") navigate("/admin", { replace: true });
         else if (profile.role === "coordinator") navigate("/coordinator", { replace: true });
         else navigate("/dashboard", { replace: true });
       }
     }
-  }, [user, profile, loading, navigate, allowedRoles]);
+  }, [user, profile, loading, navigate, allowedRoles, allowIncompleteProfile]);
 
   if (loading) {
     return (
@@ -65,8 +66,9 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
   }
 
   if (!user) return null;
-  if (profile && !isProfileComplete(profile)) return null;
-  if (allowedRoles && profile && !allowedRoles.includes(profile.role)) return null;
+  if (!allowIncompleteProfile && (!profile || !isProfileComplete(profile))) return null;
+  if (allowedRoles && profile && isProfileComplete(profile) && !allowedRoles.includes(profile.role)) return null;
 
   return <>{children}</>;
 }
+

@@ -1,7 +1,8 @@
 import { useNavigate, useLocation } from "react-router";
-import { LogOut, LayoutDashboard, Users, Megaphone, ChevronDown } from "lucide-react";
+import { LogOut, LayoutDashboard, Users } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import logoSrc from "../../assets/logo.png";
 import { toast } from "sonner";
 import type { Role } from "../lib/api";
 
@@ -67,15 +68,8 @@ export function AppHeader() {
             onClick={() => navigate("/")}
             className="flex items-center gap-2.5 group"
           >
-            <div className="w-8 h-8 flex-shrink-0">
-              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                <circle cx="20" cy="20" r="19" fill="#9B1B2E" />
-                <circle cx="20" cy="20" r="19" stroke="#C8962C" strokeWidth="1.5" />
-                <path d="M14 26L20 10L26 26" stroke="#FDFDF0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M16.5 20.5H23.5" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M20 26V30" stroke="#C8962C" strokeWidth="1.5" strokeLinecap="round" />
-                <circle cx="20" cy="31" r="1" fill="#C8962C" />
-              </svg>
+            <div className="w-9 h-9 flex items-center justify-center bg-white rounded-full shadow-sm border border-[#E8DDD5] flex-shrink-0">
+              <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
             </div>
             <span
               className="text-[#9B1B2E] group-hover:text-[#C8962C] transition-colors hidden sm:block"

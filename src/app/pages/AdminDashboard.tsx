@@ -79,6 +79,7 @@ function AdminContent() {
   const [annContent, setAnnContent] = useState("");
   const [annUnit, setAnnUnit] = useState<string>("");
   const [annSaving, setAnnSaving] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   // Search/filter
   const [searchUsers, setSearchUsers] = useState("");
@@ -113,7 +114,7 @@ function AdminContent() {
     try {
       await api.updateUserRole(userId, role, session.access_token);
       toast.success("Role updated");
-      fetchData();
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to update role");
     }
@@ -126,7 +127,7 @@ function AdminContent() {
     try {
       await api.updateUserStatus(userId, status, session.access_token);
       toast.success("Status updated");
-      fetchData();
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to update status");
     }
@@ -139,7 +140,7 @@ function AdminContent() {
     try {
       await api.updateMembershipRequest(id, status, session.access_token);
       toast.success(`Request ${status}`);
-      fetchData();
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Action failed");
     }
@@ -167,7 +168,7 @@ function AdminContent() {
         toast.success("Published");
       }
       setShowForm(false);
-      fetchData();
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to save");
     }
@@ -175,11 +176,12 @@ function AdminContent() {
   };
 
   const deleteAnnouncement = async (id: string) => {
-    if (!session?.access_token || !confirm("Delete this announcement?")) return;
+    if (!session?.access_token) return;
     try {
       await api.deleteAnnouncement(id, session.access_token);
       toast.success("Deleted");
-      fetchData();
+      setDeleteConfirmId(null);
+      await fetchData();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to delete");
     }
@@ -512,9 +514,23 @@ function AdminContent() {
                           <button onClick={() => openEdit(ann)} className="p-1.5 rounded-lg hover:bg-[#F0E8E0] text-[#6B5E59] transition-colors">
                             <Pencil size={14} />
                           </button>
-                          <button onClick={() => deleteAnnouncement(ann.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-[#6B5E59] hover:text-red-600 transition-colors">
-                            <Trash2 size={14} />
-                          </button>
+                          {deleteConfirmId === ann.id ? (
+                            <div className="flex items-center gap-1">
+                              <button onClick={() => deleteAnnouncement(ann.id)}
+                                className="px-2 py-1 rounded-lg text-xs text-white font-medium"
+                                style={{ background: "#dc2626" }}>
+                                Confirm
+                              </button>
+                              <button onClick={() => setDeleteConfirmId(null)}
+                                className="px-2 py-1 rounded-lg text-xs border border-[#E8DDD5] text-[#6B5E59]">
+                                Cancel
+                              </button>
+                            </div>
+                          ) : (
+                            <button onClick={() => setDeleteConfirmId(ann.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-[#6B5E59] hover:text-red-600 transition-colors">
+                              <Trash2 size={14} />
+                            </button>
+                          )}
                         </div>
                       </div>
                     ))}

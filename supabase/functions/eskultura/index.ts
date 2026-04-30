@@ -230,9 +230,9 @@ async function deleteAnnouncement(id: string): Promise<void> {
   if (error) throw new Error(error.message);
 }
 
-const app = new Hono();
+const app = new Hono().basePath("/eskultura");
 
-app.use("*", logger(console.log));
+app.use("/*", logger(console.log));
 app.use(
   "/*",
   cors({
@@ -722,7 +722,6 @@ app.post("/announcements", async (c) => {
       unit: announcementUnit,
       created_by: user.id,
       created_by_name: profile.full_name || profile.email,
-      updated_at: new Date().toISOString(),
     });
 
     console.log(`Announcement ${id} created by ${user.id} (${profile.role})`);
