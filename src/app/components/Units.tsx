@@ -7,10 +7,10 @@ import { ArrowRight } from "lucide-react";
 const units = [
   {
     id: "himig",
-    name: "Himig",
+    name: "Himig EsKultura",
     tagline: "Music & Vocal Performance",
     description:
-      "Explore the rich tapestry of Filipino musical traditions, from kundiman to contemporary compositions. Nurture your voice and musical craft.",
+      "This is the unit that gives meaning to music, where students gather to create beautiful melodies and harmonies. It opens the door to exploring different genres of music and developing skills in singing and playing instruments.",
     emoji: "🎵",
     color: "#9B1B2E",
     lightBg: "#FFF5F7",
@@ -19,10 +19,10 @@ const units = [
   },
   {
     id: "teatro",
-    name: "Teatro",
+    name: "Teatro EsKultura",
     tagline: "Acting & Stage Performance",
     description:
-      "Step into the spotlight and bring Filipino stories to life. From sarsuwela to modern drama, teatro is where emotion meets artistry.",
+      "Teatro Eskultura is a group of students that brings stories to life on stage. This unit promotes and supports the art of theater within EsKultura. Each production they create contains stories and art that highlight important current issues.",
     emoji: "🎭",
     color: "#7D1525",
     lightBg: "#FFF4F5",
@@ -31,10 +31,10 @@ const units = [
   },
   {
     id: "katha",
-    name: "Katha",
+    name: "Katha EsKultura",
     tagline: "Writing & Storytelling",
     description:
-      "Weave narratives that honor the Filipino voice. Poetry, prose, and script — Katha is the space for literary expression and cultural storytelling.",
+      "This is the unit that promotes the art of writing, where members express their thoughts through different forms of literature. Katha Eskultura encourages meaningful writing that conveys ideas and emotions.",
     emoji: "✍️",
     color: "#C8962C",
     lightBg: "#FFFBF2",
@@ -43,10 +43,10 @@ const units = [
   },
   {
     id: "ritmo",
-    name: "Ritmo",
+    name: "Ritmo EsKultura",
     tagline: "Dance & Movement",
     description:
-      "Feel the rhythm of Philippine folk, contemporary, and street dance. Ritmo channels the energy of Filipino movement as living heritage.",
+      "This is the unit that gives voice to dance, where students express themselves through different styles and movements. It aims to captivate and engage the audience through meaningful movement and artistry.",
     emoji: "💃",
     color: "#E0703A",
     lightBg: "#FFF6F2",
@@ -55,10 +55,10 @@ const units = [
   },
   {
     id: "likha",
-    name: "Likha",
+    name: "Likha EsKultura",
     tagline: "Visual Arts & Design",
     description:
-      "Create, paint, sculpt, and design. Likha celebrates Filipino aesthetics through visual expression — from traditional crafts to digital artistry.",
+      "This is the unit that showcases visual arts, where members demonstrate skill in painting, drawing, and other visual art forms. This unit forms public artistic expression and presents works that highlight their talents.",
     emoji: "🎨",
     color: "#8B6E52",
     lightBg: "#FBF8F5",

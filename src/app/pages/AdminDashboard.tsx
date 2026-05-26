@@ -226,7 +226,7 @@ function AdminContent() {
                 <Shield size={16} className="text-[#C8962C]" />
                 <p className="text-[#C8962C] text-sm font-medium uppercase tracking-wide">System Administrator</p>
               </div>
-              <h2 className="text-white font-bold text-2xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-white font-bold text-2xl" style={{ fontFamily: "'Inter', serif" }}>
                 Admin Dashboard
               </h2>
               <p className="text-white/50 text-sm mt-0.5">{profile?.full_name} · {profile?.email}</p>
@@ -239,7 +239,7 @@ function AdminContent() {
                 { label: "Pending", value: pendingReqs },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-white font-bold text-2xl" style={{ fontFamily: "'Playfair Display', serif" }}>{stat.value}</p>
+                  <p className="text-white font-bold text-2xl" style={{ fontFamily: "'Inter', serif" }}>{stat.value}</p>
                   <p className="text-white/40 text-xs">{stat.label}</p>
                 </div>
               ))}
@@ -284,7 +284,7 @@ function AdminContent() {
                           {stat.icon}
                         </div>
                       </div>
-                      <p className="text-3xl font-bold" style={{ fontFamily: "'Playfair Display', serif", color: stat.color }}>{stat.value}</p>
+                      <p className="text-3xl font-bold" style={{ fontFamily: "'Inter', serif", color: stat.color }}>{stat.value}</p>
                       <p className="text-[#6B5E59] text-sm mt-1">{stat.label}</p>
                     </motion.div>
                   ))}
@@ -292,7 +292,7 @@ function AdminContent() {
 
                 {/* Unit breakdown */}
                 <div className="bg-white rounded-2xl p-6 border border-[#F0E8E0]">
-                  <h3 className="font-bold text-[#1A1210] mb-5" style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem" }}>
+                  <h3 className="font-bold text-[#1A1210] mb-5" style={{ fontFamily: "'Inter', serif", fontSize: "1.1rem" }}>
                     Unit Breakdown
                   </h3>
                   <div className="grid sm:grid-cols-5 gap-4">
@@ -302,8 +302,8 @@ function AdminContent() {
                       const color = unitColors[unit];
                       return (
                         <div key={unit} className="rounded-xl p-4 flex flex-col gap-2" style={{ background: `${color}10`, border: `1px solid ${color}25` }}>
-                          <p className="font-bold" style={{ fontFamily: "'Playfair Display', serif", color, fontSize: "1.05rem" }}>{unit}</p>
-                          <p className="text-2xl font-bold" style={{ fontFamily: "'Playfair Display', serif", color }}>{count}</p>
+                          <p className="font-bold" style={{ fontFamily: "'Inter', serif", color, fontSize: "1.05rem" }}>{unit}</p>
+                          <p className="text-2xl font-bold" style={{ fontFamily: "'Inter', serif", color }}>{count}</p>
                           <p className="text-xs" style={{ color: `${color}99` }}>{active} active</p>
                           {count > 0 && (
                             <div className="w-full h-1.5 rounded-full bg-white overflow-hidden">
@@ -356,7 +356,7 @@ function AdminContent() {
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredUsers.map((u, i) => (
+                        {filteredUsers.map((u) => (
                           <tr key={u.id} className="border-b border-[#F0E8E0] last:border-0 hover:bg-[#FDF8F4] transition-colors">
                             <td className="px-4 py-3.5">
                               <p className="font-semibold text-[#1A1210]">{u.full_name || "—"}</p>
@@ -494,7 +494,7 @@ function AdminContent() {
                       <div key={ann.id} className="bg-white rounded-xl p-5 border border-[#F0E8E0] flex items-start gap-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <h4 className="font-bold text-[#1A1210]" style={{ fontFamily: "'Playfair Display', serif" }}>{ann.title}</h4>
+                            <h4 className="font-bold text-[#1A1210]" style={{ fontFamily: "'Inter', serif" }}>{ann.title}</h4>
                             {ann.unit ? (
                               <span className="px-2 py-0.5 rounded-full text-white text-xs font-semibold"
                                 style={{ background: unitColors[ann.unit] }}>
@@ -548,7 +548,7 @@ function AdminContent() {
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
             className="w-full max-w-lg rounded-2xl bg-white overflow-hidden shadow-2xl">
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#F0E8E0]">
-              <h3 className="font-bold text-[#1A1210]" style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem" }}>
+              <h3 className="font-bold text-[#1A1210]" style={{ fontFamily: "'Inter', serif", fontSize: "1.1rem" }}>
                 {editingAnn ? "Edit Announcement" : "New Announcement"}
               </h3>
               <button onClick={() => setShowForm(false)} className="p-1.5 rounded-lg hover:bg-[#F0E8E0] text-[#6B5E59]">

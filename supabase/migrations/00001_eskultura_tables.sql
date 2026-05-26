@@ -72,6 +72,7 @@ CREATE POLICY "Users can read own membership requests" ON public.membership_requ
 CREATE POLICY "Authenticated users can read announcements" ON public.announcements
   FOR SELECT USING (true);
 
+
 -- ─── Migrate existing KV data ───────────────────────────────────────────────
 -- Only runs if the old kv_store_b49a1e6e table exists. Safe to re-run.
 DO $$

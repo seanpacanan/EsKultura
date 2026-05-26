@@ -102,7 +102,7 @@ export function Signup() {
             <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
           </div>
           <div>
-            <p className="text-white" style={{ fontFamily: "'Inter', serif", fontWeight: 700, fontSize: "1.1rem" }}>Eskultura</p>
+            <p className="text-white" style={{ fontFamily: "'Inter', serif", fontWeight: 700, fontSize: "1.1rem" }}>EsKultura</p>
             <p className="text-white/40" style={{ fontSize: "0.62rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>Eskuwelahan ng Manlililok ng Kulturang Pilipino</p>
           </div>
         </div>
@@ -121,7 +121,7 @@ export function Signup() {
           <div className="flex flex-col gap-2.5">
             {[
               "Access to 5 creative units",
-              "Community events and activities",
+              "Community activities and showcases",
               "AI-powered announcements",
               "Cultural workshops & performances",
             ].map((item) => (
@@ -145,11 +145,11 @@ export function Signup() {
             <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-sm border border-[#E8DDD5]">
               <img src={logoSrc} alt="EsKultura Logo" className="w-full h-full object-cover rounded-full" />
             </div>
-            <span style={{ fontFamily: "'Inter', serif", fontWeight: 700, color: "#A47251" }}>Eskultura</span>
+            <span style={{ fontFamily: "'Inter', serif", fontWeight: 700, color: "#A47251" }}>EsKultura</span>
           </div>
 
           <div className="mb-8">
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 800, fontSize: "2rem", color: "#1A1210", lineHeight: 1.2 }}>
+            <h1 style={{ fontFamily: "'Inter', serif", fontWeight: 800, fontSize: "2rem", color: "#1A1210", lineHeight: 1.2 }}>
               Create your account
             </h1>
             <p className="mt-2 text-[#6B5E59]" style={{ fontSize: "0.9rem" }}>

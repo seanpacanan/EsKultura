@@ -44,7 +44,7 @@ export function NotFound() {
 
         <h1
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Inter', serif",
             fontWeight: 800,
             fontSize: "6rem",
             lineHeight: 1,
@@ -59,14 +59,14 @@ export function NotFound() {
 
         <h2
           className="mt-4 text-[#1A1210]"
-          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.5rem" }}
+          style={{ fontFamily: "'Inter', serif", fontWeight: 700, fontSize: "1.5rem" }}
         >
           Page Not Found
         </h2>
 
         <p className="mt-3 text-[#6B5E59]" style={{ fontSize: "0.95rem", lineHeight: 1.7 }}>
           The page you're looking for doesn't exist or has been moved.
-          Let's get you back to Eskultura.
+          Let's get you back to EsKultura.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">

@@ -128,7 +128,7 @@ export function CTA() {
                 className="text-white/70 max-w-xl mx-auto"
                 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "1.05rem", lineHeight: 1.75 }}
               >
-                Join Eskultura today and become part of a vibrant community dedicated to preserving and advancing the rich artistic traditions of the Philippines.
+                Join EsKultura today and become part of a vibrant community dedicated to preserving and advancing the rich artistic traditions of the Philippines.
               </p>
             </motion.div>
 

@@ -1,4 +1,4 @@
-import { Facebook, Mail, MapPin, Heart } from "lucide-react";
+import { Facebook, Mail, MapPin } from "lucide-react";
 import logoSrc from "../../assets/logo.png";
 
 const units = ["Himig", "Teatro", "Katha", "Ritmo", "Likha"];
@@ -170,11 +170,11 @@ export function Footer() {
               className="text-white/35 text-center sm:text-left"
               style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem" }}
             >
-              © {new Date().getFullYear()} Eskultura. All rights reserved.{" "}
+              © {new Date().getFullYear()} EsKultura. All rights reserved.{" "}
               <span className="text-white/20">·</span>{" "}
-             
+
             </p>
-            
+
           </div>
         </div>
       </div>

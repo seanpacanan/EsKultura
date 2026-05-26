@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
-import { Users, LayoutGrid, Calendar, Sparkles } from "lucide-react";
+import { Users, LayoutGrid, BookOpen, Sparkles } from "lucide-react";
 
 const features = [
   {
@@ -24,10 +24,10 @@ const features = [
     delay: 0.1,
   },
   {
-    icon: <Calendar size={24} />,
-    title: "Event & Activity Management",
+    icon: <BookOpen size={24} />,
+    title: "Workshop & Program Records",
     description:
-      "Plan, schedule, and coordinate cultural events, performances, workshops, and rehearsals with integrated activity management tools.",
+      "Keep workshops, skill tracks, and creative programs documented so coordinators preserve history and members always know what is on deck.",
     color: "#E0703A",
     bg: "#FFF6F2",
     gradient: "linear-gradient(135deg, #E0703A, #C05A28)",
@@ -123,7 +123,7 @@ export function Features() {
               initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.55, delay: feature.delay + 0.2, ease: "easeOut" }}
-              className="group relative flex flex-col gap-5 p-7 rounded-2xl cursor-default transition-all duration-350 hover:-translate-y-2"
+              className="group relative flex flex-col gap-5 p-7 rounded-2xl cursor-default transition-all duration-300 hover:-translate-y-2"
               style={{
                 background: feature.bg,
                 border: "1px solid rgba(0,0,0,0.07)",
@@ -138,7 +138,7 @@ export function Features() {
 
               {/* Icon */}
               <div
-                className="relative w-13 h-13 w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition-shadow duration-300"
+                className="relative w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition-shadow duration-300"
                 style={{ background: feature.gradient }}
               >
                 {feature.icon}
@@ -191,8 +191,8 @@ export function Features() {
             <span className="text-lg">🌺</span>
             <span
               className="text-[#C8962C]"
-              style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontSize: "0.85rem", fontStyle: "italic" }}
-            >Eskultura</span>
+              style={{ fontFamily: "'Inter', serif", fontWeight: 600, fontSize: "0.85rem", fontStyle: "italic" }}
+            >EsKultura</span>
             <span className="text-lg">🌺</span>
           </div>
           <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, #C8962C40, transparent)" }} />

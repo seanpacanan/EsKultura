@@ -78,7 +78,7 @@ export function Login() {
           <h2 style={{ fontFamily: "'Inter', serif", fontWeight: 800, fontSize: "2.4rem", lineHeight: 1.15, color: "white" }}>
             Welcome back to{" "}
             <span style={{ backgroundImage: "linear-gradient(135deg, #A47251, #A47251)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              Eskultura!
+              EsKultura!
             </span>
           </h2>
           <p className="text-white/60" style={{ fontSize: "1rem", lineHeight: 1.75 }}>
@@ -195,7 +195,7 @@ export function Login() {
 
           {/* Footer */}
           <p className="mt-8 text-center text-[#6B5E59]/60 text-xs">
-            By signing in, you agree to Eskultura's Terms of Service and Privacy Policy.
+            By signing in, you agree to EsKultura's Terms of Service and Privacy Policy.
           </p>
           <p className="mt-3 text-center">
             <Link to="/" className="text-[#A47251]/70 hover:text-[#A47251] text-xs transition-colors">

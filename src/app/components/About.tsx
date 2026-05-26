@@ -14,7 +14,7 @@ const highlights = [
 const stats = [
   { value: "5", label: "Creative Units" },
   { value: "500+", label: "Active Members" },
-  { value: "50+", label: "Annual Events" },
+  { value: "50+", label: "Annual Programs" },
   { value: "10+", label: "Years of Legacy" },
 ];
 
@@ -137,7 +137,7 @@ export function About() {
               }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#ffffff]" />
-              About Eskultura
+              About EsKultura
             </span>
 
             {/* Heading */}
@@ -170,13 +170,13 @@ export function About() {
                 className="text-[#6B5E59]"
                 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "0.975rem", lineHeight: 1.8 }}
               >
-                Eskultura — Eskuwelahan ng Manlililok ng Kulturang Pilipino — is a student-led arts organization dedicated to the preservation, promotion, and celebration of Filipino cultural heritage through creative expression.
+                EsKultura: Eskuwelahan ng Manlililok ng Kulturang Pilipino — is a group of students composed of different units that showcase and promote art and culture within LSPU Los Baños Campus. Each of its units, Ritmo Eskultura, Himig Eskultura, Likha Eskultura, Teatro Eskultura, and Likha Eskultura, aims to bring life and meaning to various forms of art.
               </p>
               <p
                 className="text-[#6B5E59]"
                 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "0.975rem", lineHeight: 1.8 }}
               >
-                Through five distinct creative units, we provide students with a structured, nurturing environment to hone their craft, collaborate with fellow artists, and contribute to the living tapestry of Filipino identity and culture.
+                The overall goal of EsKultura, the School of Cultural Creators of Filipino Culture, is to establish a vibrant and thriving culture of art and heritage both inside and outside the university. The organization aims to serve as a center for development, performance, and promotion of the importance of Filipino culture in the lives of students.
               </p>
             </div>
 
@@ -219,7 +219,7 @@ export function About() {
                 >
                   <p
                     className="text-[#9B1B2E]"
-                    style={{ fontFamily: "'Playfair Display', serif", fontWeight: 800, fontSize: "1.6rem" }}
+                    style={{ fontFamily: "'Inter', serif", fontWeight: 800, fontSize: "1.6rem" }}
                   >
                     {s.value}
                   </p>

@@ -35,16 +35,10 @@ export function AppHeader() {
 
   const navLinks =
     profile?.role === "admin"
-      ? [
-          { href: "/admin", label: "Dashboard", icon: <LayoutDashboard size={15} /> },
-        ]
+      ? [{ href: "/admin", label: "Dashboard", icon: <LayoutDashboard size={15} /> }]
       : profile?.role === "coordinator"
-      ? [
-          { href: "/coordinator", label: "My Unit", icon: <Users size={15} /> },
-        ]
-      : [
-          { href: "/dashboard", label: "Dashboard", icon: <LayoutDashboard size={15} /> },
-        ];
+        ? [{ href: "/coordinator", label: "My Unit", icon: <Users size={15} /> }]
+        : [{ href: "/dashboard", label: "Dashboard", icon: <LayoutDashboard size={15} /> }];
 
   const roleInfo = profile ? roleBadgeStyle[profile.role] : null;
   const initials = profile?.full_name
@@ -73,9 +67,9 @@ export function AppHeader() {
             </div>
             <span
               className="text-[#9B1B2E] group-hover:text-[#C8962C] transition-colors hidden sm:block"
-              style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1rem" }}
+              style={{ fontFamily: "'Inter', serif", fontWeight: 700, fontSize: "1rem" }}
             >
-              Eskultura
+              EsKultura
             </span>
           </button>
 

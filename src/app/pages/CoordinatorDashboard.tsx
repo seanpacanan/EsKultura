@@ -156,7 +156,7 @@ function CoordContent() {
           <div className="px-8 py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <p className="text-white/70 text-sm font-medium uppercase tracking-wide">Unit Coordinator</p>
-              <h2 className="text-white font-bold text-2xl mt-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-white font-bold text-2xl mt-1" style={{ fontFamily: "'Inter', serif" }}>
                 {unit} Unit
               </h2>
               <p className="text-white/60 text-sm mt-0.5">{profile?.full_name}</p>
@@ -168,7 +168,7 @@ function CoordContent() {
                 { label: "Posts", value: announcements.length },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-white font-bold text-2xl" style={{ fontFamily: "'Playfair Display', serif" }}>{stat.value}</p>
+                  <p className="text-white font-bold text-2xl" style={{ fontFamily: "'Inter', serif" }}>{stat.value}</p>
                   <p className="text-white/60 text-xs">{stat.label}</p>
                 </div>
               ))}
@@ -307,7 +307,7 @@ function CoordContent() {
                   announcements.map((ann) => (
                     <div key={ann.id} className="bg-white rounded-xl p-5 border border-[#F0E8E0]">
                       <div className="flex items-start justify-between gap-3">
-                        <h4 className="font-bold text-[#1A1210]" style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem" }}>
+                        <h4 className="font-bold text-[#1A1210]" style={{ fontFamily: "'Inter', serif", fontSize: "1rem" }}>
                           {ann.title}
                         </h4>
                         <div className="flex gap-1 flex-shrink-0">
@@ -353,7 +353,7 @@ function CoordContent() {
             className="w-full max-w-lg rounded-2xl bg-white overflow-hidden shadow-2xl"
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#F0E8E0]">
-              <h3 className="font-bold text-[#1A1210]" style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem" }}>
+              <h3 className="font-bold text-[#1A1210]" style={{ fontFamily: "'Inter', serif", fontSize: "1.1rem" }}>
                 {editingAnn ? "Edit Announcement" : "New Announcement"}
               </h3>
               <button onClick={() => setShowForm(false)} className="p-1.5 rounded-lg hover:bg-[#F0E8E0] text-[#6B5E59]">

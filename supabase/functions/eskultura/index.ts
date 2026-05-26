@@ -17,6 +17,11 @@ interface Profile {
   role: Role;
   status: ProfileStatus;
   created_at: string;
+  course: string | null;
+  student_number: string | null;
+  unit_info: string | null;
+  experience_awards: string | null;
+  avatar_url: string | null;
 }
 
 interface MembershipRequest {
@@ -80,6 +85,26 @@ async function getProfile(userId: string): Promise<Profile | null> {
   return data as Profile | null;
 }
 
+/**
+ * Gets a profile by ID, or creates it if it doesn't exist (e.g. for Google OAuth users).
+ */
+async function getOrCreateProfile(user: any): Promise<Profile> {
+  const existing = await getProfile(user.id);
+  if (existing) return existing;
+
+  const newProfile: Profile = {
+    id: user.id,
+    email: user.email || "",
+    full_name: user.user_metadata?.full_name || null,
+    unit: null,
+    role: "viewer",
+    status: "inactive",
+    created_at: new Date().toISOString(),
+  };
+
+  return await upsertProfile(newProfile);
+}
+
 async function getAllProfiles(): Promise<Profile[]> {
   const supabase = getServiceClient();
   const { data, error } = await supabase
@@ -114,7 +139,7 @@ async function upsertProfile(profile: Profile): Promise<Profile> {
 
 async function updateProfileFields(
   userId: string,
-  fields: Partial<Pick<Profile, "full_name" | "unit" | "role" | "status">>
+  fields: Partial<Pick<Profile, "full_name" | "unit" | "role" | "status" | "course" | "student_number" | "unit_info" | "experience_awards" | "avatar_url">>
 ): Promise<Profile> {
   const supabase = getServiceClient();
   const { data, error } = await supabase
@@ -236,16 +261,17 @@ app.use("/*", logger(console.log));
 app.use(
   "/*",
   cors({
-    origin: [
-      "https://es-kultura.vercel.app",
-      "https://nqpjoquopcbvhrolwirg.supabase.co",
-      "http://localhost:5173",
-      "http://localhost:4173",
-    ],
-    allowHeaders: ["Content-Type", "Authorization"],
+    origin: (origin) => {
+      if (!origin) return "*";
+      if (origin.startsWith("http://localhost:")) return origin;
+      if (origin.includes(".vercel.app")) return origin;
+      if (origin.includes(".supabase.co")) return origin;
+      return "https://es-kultura.vercel.app";
+    },
+    allowHeaders: ["Content-Type", "Authorization", "x-client-info", "apikey"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
-    maxAge: 600,
+    maxAge: 86400,
   })
 );
 
@@ -342,22 +368,7 @@ app.get("/profile", async (c) => {
     const user = await getAuthUser(c.req.header("Authorization"));
     if (!user) return c.json({ error: "Unauthorized" }, 401);
 
-    let profile = await getProfile(user.id);
-
-    // Auto-create profile if missing (edge case for OAuth or direct signups)
-    if (!profile) {
-      profile = {
-        id: user.id,
-        email: user.email || "",
-        full_name: user.user_metadata?.full_name || null,
-        unit: null,
-        role: "viewer",
-        status: "inactive",
-        created_at: new Date().toISOString(),
-      };
-      profile = await upsertProfile(profile);
-    }
-
+    const profile = await getOrCreateProfile(user);
     return c.json(profile);
   } catch (err) {
     console.log("Get profile error:", err);
@@ -365,14 +376,14 @@ app.get("/profile", async (c) => {
   }
 });
 
-// ─── PROFILE: Update Own (full_name and unit ONLY) ───────────────────────────
+// ─── PROFILE: Update Own ─────────────────────────────────────────────────────
 app.put("/profile", async (c) => {
   try {
     const user = await getAuthUser(c.req.header("Authorization"));
     if (!user) return c.json({ error: "Unauthorized" }, 401);
 
     const body = await c.req.json();
-    const { full_name, unit } = body;
+    const { full_name, unit, course, student_number, unit_info, experience_awards, avatar_url } = body;
 
     if (unit && !VALID_UNITS.includes(unit)) {
       return c.json(
@@ -381,14 +392,19 @@ app.put("/profile", async (c) => {
       );
     }
 
-    const profile = await getProfile(user.id);
-    if (!profile) return c.json({ error: "Profile not found" }, 404);
+    const profile = await getOrCreateProfile(user);
 
-    // SECURITY: Only allow updating full_name and unit — role is NEVER set here
-    const fields: Partial<Pick<Profile, "full_name" | "unit" | "status">> = {
+    // SECURITY: Only allow updating safe fields — role is NEVER set here
+    const fields: Partial<Pick<Profile, "full_name" | "unit" | "status" | "course" | "student_number" | "unit_info" | "experience_awards" | "avatar_url">> = {
       full_name: full_name !== undefined ? full_name : profile.full_name,
       unit: unit !== undefined ? (unit as Unit) : profile.unit,
     };
+
+    if (course !== undefined) fields.course = course || null;
+    if (student_number !== undefined) fields.student_number = student_number || null;
+    if (unit_info !== undefined) fields.unit_info = unit_info || null;
+    if (experience_awards !== undefined) fields.experience_awards = experience_awards || null;
+    if (avatar_url !== undefined) fields.avatar_url = avatar_url || null;
 
     // Auto-set status to pending when profile becomes complete
     if (fields.full_name && fields.unit && profile.status === "inactive") {
@@ -403,14 +419,59 @@ app.put("/profile", async (c) => {
   }
 });
 
+// ─── PROFILE: Upload Avatar ───────────────────────────────────────────────────
+app.post("/profile/avatar", async (c) => {
+  try {
+    const user = await getAuthUser(c.req.header("Authorization"));
+    if (!user) return c.json({ error: "Unauthorized" }, 401);
+
+    const formData = await c.req.formData();
+    const file = formData.get("avatar") as File | null;
+    if (!file) return c.json({ error: "No file provided" }, 400);
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) {
+      return c.json({ error: "Invalid file type. Use JPEG, PNG, WebP, or GIF." }, 400);
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      return c.json({ error: "File too large. Maximum size is 5MB." }, 400);
+    }
+
+    const ext = file.name.split(".").pop() || "jpg";
+    const fileName = `${user.id}/avatar.${ext}`;
+    const supabase = getServiceClient();
+
+    const { error: uploadError } = await supabase.storage
+      .from("avatars")
+      .upload(fileName, file, { upsert: true, contentType: file.type });
+
+    if (uploadError) throw new Error(uploadError.message);
+
+    const { data: { publicUrl } } = supabase.storage
+      .from("avatars")
+      .getPublicUrl(fileName);
+
+    // Append cache-buster so the browser always fetches the latest
+    const avatarUrl = `${publicUrl}?t=${Date.now()}`;
+
+    // Persist the URL in the profile
+    const updated = await updateProfileFields(user.id, { avatar_url: avatarUrl });
+    console.log(`Avatar updated for user ${user.id}: ${avatarUrl}`);
+    return c.json({ avatar_url: avatarUrl, profile: updated });
+  } catch (err) {
+    console.log("Avatar upload error:", err);
+    return c.json({ error: "Internal server error uploading avatar" }, 500);
+  }
+});
+
 // ─── PROFILES: Get All (admin only) ──────────────────────────────────────────
 app.get("/profiles", async (c) => {
   try {
     const user = await getAuthUser(c.req.header("Authorization"));
     if (!user) return c.json({ error: "Unauthorized" }, 401);
 
-    const profile = await getProfile(user.id);
-    if (!profile || profile.role !== "admin") {
+    const profile = await getOrCreateProfile(user);
+    if (profile.role !== "admin") {
       return c.json({ error: "Forbidden: Admin access required" }, 403);
     }
 

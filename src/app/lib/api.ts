@@ -7,7 +7,6 @@ export type Role = "admin" | "coordinator" | "viewer";
 export type Unit = "Himig" | "Teatro" | "Katha" | "Ritmo" | "Likha";
 export type ProfileStatus = "active" | "inactive" | "pending";
 export type MembershipStatus = "pending" | "approved" | "rejected";
-
 export interface Profile {
   id: string;
   email: string;
@@ -16,6 +15,11 @@ export interface Profile {
   role: Role;
   status: ProfileStatus;
   created_at: string;
+  course: string | null;
+  student_number: string | null;
+  unit_info: string | null;
+  experience_awards: string | null;
+  avatar_url: string | null;
 }
 
 export interface MembershipRequest {
@@ -82,13 +86,36 @@ export const api = {
     request<Profile>("/profile", {}, token),
 
   updateProfile: (
-    data: { full_name?: string; unit?: string },
+    data: {
+      full_name?: string;
+      unit?: string;
+      course?: string;
+      student_number?: string;
+      unit_info?: string;
+      experience_awards?: string;
+      avatar_url?: string;
+    },
     token: string
   ) =>
     request<Profile>("/profile", {
       method: "PUT",
       body: JSON.stringify(data),
     }, token),
+
+  uploadAvatar: async (file: File, token: string): Promise<{ avatar_url: string; profile: Profile }> => {
+    const formData = new FormData();
+    formData.append("avatar", file);
+    const response = await fetch(`${BASE_URL}/profile/avatar`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({ error: "Upload failed" }));
+      throw new Error(err.error || "Upload failed");
+    }
+    return response.json();
+  },
 
   // ─── Profiles (admin / coordinator) ────────────────────────────────────────
   getAllProfiles: (token: string) =>
